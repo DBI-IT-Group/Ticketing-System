@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load heroicons %}
+
+{% block sidebar %}
+<div class="flex flex-col w-64 h-full p-4  font-sans bg-gray-50">
+    <!-- Panel Header -->
+    <div class="mb-6 p-4 rounded-lg shadow-md bg-white">
+        <h1 class="text-xl font-bold text-gray-800">
+            User Portal
+        </h1>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex-1 space-y-1">
+        <ul class="dashboard-menu">
+            <li>
+                <a href="{% url 'technician_dashboard' %}" 
+                   class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-gray-700 {% if request.resolver_match.url_name == 'admin_dashboard' %}bg-gray-100 font-semibold{% endif %} hover:bg-gray-100">
+                    {% heroicon_outline "home" class="w-5 h-5" %}Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'l1_technicians_tickets' %}" 
+                   class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-gray-100">
+                    {% heroicon_outline "clipboard-document-list" class="w-5 h-5" %} Ticket Management
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Logout anchored at bottom -->
+    <div class="mt-auto">
+        <a href="{% url 'logout' %}" 
+           class="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-gray-700 text-white hover:bg-red-500 hover:text-white">
+            {% heroicon_outline "arrow-left-on-rectangle" class="w-5 h-5" %}Logout
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+    <!-- My Tickets -->
+    <div class="bg-gray-800 border border-gray-300 rounded-xl p-6 flex items-center justify-between shadow-md hover:shadow-lg hover:border-cyan-600 transition duration-200">
+        <div class="flex items-center gap-3 text-white font-semibold">
+            {% heroicon_outline "ticket" class="w-6 h-6 text-cyan-400" %}
+            <span>My Tickets</span>
+        </div>
+        <span class="bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            {{ my_tickets_count }}
+        </span>
+    </div>
+
+    <!-- Pending Tickets -->
+    <div class="bg-gray-800 border border-gray-600 rounded-xl p-6 flex items-center justify-between shadow-md hover:shadow-lg hover:border-yellow-500 transition duration-200">
+        <div class="flex items-center gap-3 text-white font-semibold">
+            {% heroicon_outline "receipt-refund" class="w-6 h-6 text-yellow-400" %}
+            <span>Pending Tickets</span>
+        </div>
+        <span class="bg-yellow-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+            {{ pending_tickets_count }}
+        </span>
+    </div>
+</div>
+{% endblock %}
+
